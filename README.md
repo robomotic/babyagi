@@ -114,6 +114,6 @@ ARC-AGI-2 (released 2025) introduces harder, concept-heavy tasks designed to bre
 
 1.  **Meerkats**: [Thornton, A., & McAuliffe, K. (2006). Teaching in wild meerkats. *Science*.](https://www.science.org/doi/10.1126/science.1128727)
 2.  **Killer Whales**: [Guinet, C., & Bouvier, J. (1995). Development of intentional stranding hunting techniques in killer whale calves at Crozet Archipelago. *Canadian Journal of Zoology*.](https://cdnsciencepub.com/doi/abs/10.1139/z95-004)
-3.  **Precocial vs Altricial**: [Portmann, A. (1944). Biologische Fragestellungen zu Problemen der menschlichen Stammesgeschichte. *Phanos*. (Coined the term "Secondary Altriciality")](https://link.springer.com/chapter/10.1007/978-3-030-26401-7_11)
+3.  **Precocial vs Altricial**: [Portmann, A. (1944). Biologische Fragestellungen zu Problemen der menschlichen Stammesgeschichte. *Phanos*. (Coined the term "Secondary Altriciality")](https://www.researchgate.net/publication/354427834_Portmann_Goethe_and_Modern_Biology_Two_and_a_Half_Ways_of_Looking_at_Nature)
 4.  **Feral Children**: [Curtiss, S. (1977). Genie: A Psycholinguistic Study of a Modern-Day "Wild Child". *Academic Press*.](https://www.sciencedirect.com/book/9780121963507/genie)
 
