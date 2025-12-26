@@ -116,4 +116,4 @@ ARC-AGI-2 (released 2025) introduces harder, concept-heavy tasks designed to bre
 2.  **Killer Whales**: [Guinet, C., & Bouvier, J. (1995). Development of intentional stranding hunting techniques in killer whale calves at Crozet Archipelago. *Canadian Journal of Zoology*.](https://cdnsciencepub.com/doi/abs/10.1139/z95-004)
 3.  **Precocial vs Altricial**: [Portmann, A. (1944). Biologische Fragestellungen zu Problemen der menschlichen Stammesgeschichte. *Phanos*. (Coined the term "Secondary Altriciality")](https://link.springer.com/chapter/10.1007/978-3-030-26401-7_11)
 4.  **Feral Children**: [Curtiss, S. (1977). Genie: A Psycholinguistic Study of a Modern-Day "Wild Child". *Academic Press*.](https://www.sciencedirect.com/book/9780121963507/genie)
-5.  **ARC AGI Criticism**: [Mitchell, M. (2021). Abstraction and Analogy-Making in Artificial Intelligence. *Annals of the New York Academy of Sciences*.](https://nyaspubs.onlinelibrary.wiley.com/doi/full/10.1111/nyas.14593)
+
