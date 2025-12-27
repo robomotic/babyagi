@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SCAFFOLDING PROOF - The Science of Backward Chaining</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0d1117;
+            --card-bg: rgba(22, 27, 34, 0.7);
+            --accent: #58a6ff;
+            --text: #c9d1d9;
+            --text-dim: #8b949e;
+            --success: #3fb950;
+            --danger: #f85149;
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text);
+            margin: 0;
+            padding: 40px;
+            overflow-x: hidden;
+            background-image:
+                radial-gradient(circle at 10% 20%, rgba(88, 166, 255, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(188, 140, 255, 0.05) 0%, transparent 40%);
+        }
+
+        .header {
+            text-align: center;
+            max-width: 1000px;
+            margin: 0 auto 60px;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 0px;
+            background: linear-gradient(90deg, #58a6ff, #bc8cff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 600;
+            letter-spacing: -2px;
+        }
+
+        .subtitle {
+            color: var(--text-dim);
+            font-size: 1.2rem;
+            margin-top: 10px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(600px, 1fr));
+            gap: 24px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(88, 166, 255, 0.3);
+        }
+
+        .card h2 {
+            margin-top: 0;
+            font-size: 1.4rem;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .complexity-badge {
+            font-size: 0.8rem;
+            padding: 4px 12px;
+            border-radius: 20px;
+            background: rgba(88, 166, 255, 0.1);
+            border: 1px solid var(--accent);
+            color: var(--accent);
+        }
+
+        canvas {
+            width: 100% !important;
+            height: 350px !important;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .stat-item {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .stat-val {
+            display: block;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: white;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--text-dim);
+        }
+
+        .theory-section {
+            grid-column: span 2;
+            display: flex;
+            gap: 30px;
+        }
+
+        .theory-text {
+            flex: 1;
+            font-size: 1rem;
+            line-height: 1.6;
+            color: var(--text-dim);
+        }
+
+        .theory-text b {
+            color: var(--text);
+        }
+
+        .evidence-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-top: 40px;
+            max-width: 1400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .evidence-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 20px;
+            border-left: 4px solid var(--accent);
+        }
+
+        .evidence-card h4 {
+            margin: 0 0 10px 0;
+            color: var(--text);
+        }
+
+        @media (max-width: 800px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .theory-section {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="header">
+        <h1>Scaffolding Complexity Proof</h1>
+        <div class="subtitle">Analytical & Empirical Validation of Backward Chaining efficiency vs. Classic RL</div>
+    </div>
+
+    <div class="grid">
+        <!-- Theoretical Complexity Card -->
+        <div class="card">
+            <h2>The Mathematics of Search <span class="complexity-badge">O(S^k) vs O(kS)</span></h2>
+            <div class="theory-text">
+                <p>In a task of depth <b>k</b> with <b>S</b> options per step:</p>
+                <ul>
+                    <li><b>Forward Chaining:</b> Must solve $P = 1/S^k$. Probability of success drops exponentially.
+                    </li>
+                    <li><b>Backward Chaining:</b> Solves $k$ individual steps of $P = 1/S$. Probability sum is linear.
+                    </li>
+                </ul>
+            </div>
+            <canvas id="theoryChart"></canvas>
+        </div>
+
+        <!-- Simulation Results Card -->
+        <div class="card">
+            <h2>Numerical Verification <span class="complexity-badge">Simulation Results</span></h2>
+            <div class="stats-grid" id="simStats">
+                <div class="stat-item"><span class="stat-val" id="classicSignal">-</span><span
+                        class="stat-label">Classic 1st Signal</span></div>
+                <div class="stat-item"><span class="stat-val" id="scaffoldSignal">-</span><span
+                        class="stat-label">Scaffold 1st Signal</span></div>
+                <div class="stat-item"><span class="stat-val" id="advantageX">-</span><span class="stat-label">Discovery
+                        Gap</span></div>
+            </div>
+            <p class="subtitle" style="margin-top:20px;">Learning Curves (V-Value at s0)</p>
+            <canvas id="simChart"></canvas>
+        </div>
+    </div>
+
+    <div class="evidence-grid">
+        <div class="evidence-card">
+            <h4>🧠 Neuroscience: Dopamine Credit</h4>
+            <p class="stat-label">Backward chaining solves the <b>Credit Assignment Problem</b> by placing rewards
+                immediately after the learner's action, creating a high-signal dopamine spike that is impossible in
+                sparse forward-chaining tasks.</p>
+        </div>
+        <div class="evidence-card" style="border-left-color: #bc8cff;">
+            <h4>🧒 Psychology: Working Memory</h4>
+            <p class="stat-label">Children possess limited working memory. Backward chaining reduces the <b>Cognitive
+                    Load</b> to $O(1)$ per stage, whereas forward chaining requires holding the entire failed sequence
+                in memory.</p>
+        </div>
+        <div class="evidence-card" style="border-left-color: #3fb950;">
+            <h4>📈 RL: Bellman Propagation</h4>
+            <p class="stat-label">Scaffolding ensures the <b>Bellman Error</b> is non-zero at the current transition
+                frontier by shifting the Initial State Distribution $\rho_0$ to known high-value states.</p>
+        </div>
+        <div class="evidence-card" style="border-left-color: #f8e3a1;">
+            <h4>🧸 Applied Pedagogy (ABA)</h4>
+            <p class="stat-label">Decades of ABA research prove that <b>Backward Chaining</b> results in faster mastery
+                of motor skills (like shoe-tying) because the "Completion Reward" is reached in every single trial.</p>
+        </div>
+    </div>
+
+    <script>
+        // Use Outfit font for charts
+        Chart.defaults.font.family = 'Outfit';
+        Chart.defaults.color = '#8b949e';
+
+        function renderTheory() {
+            const labels = [1, 2, 3, 4, 5, 6, 7];
+            const S = 3;
+            const forward = labels.map(k => Math.pow(S, k));
+            const backward = labels.map(k => k * S);
+
+            new Chart(document.getElementById('theoryChart'), {
+                type: 'line',
+                data: {
+                    labels: labels.map(k => `Depth k=${k}`),
+                    datasets: [{
+                        label: 'Forward Chaining (Exponential Search)',
+                        data: forward,
+                        borderColor: '#f85149',
+                        backgroundColor: '#f8514922',
+                        fill: true,
+                        tension: 0.4
+                    }, {
+                        label: 'Backward Chaining (Linear Curriculum)',
+                        data: backward,
+                        borderColor: '#3fb950',
+                        backgroundColor: '#3fb95022',
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: { legend: { position: 'bottom' } },
+                    scales: {
+                        y: { type: 'logarithmic', grid: { color: '#30363d' }, title: { display: true, text: 'Expected Training Time' } },
+                        x: { grid: { display: false } }
+                    }
+                }
+            });
+        }
+
+        async function loadSimData() {
+            try {
+                const response = await fetch('td_comparison_results.json');
+                const data = await response.json();
+
+                // Update Stats
+                const c = data.classic_td_lambda;
+                const s = data.scaffolded_td0;
+
+                document.getElementById('classicSignal').innerText = c.eps_to_first_signal || 'N/A';
+                document.getElementById('scaffoldSignal').innerText = s.eps_to_first_signal || '0';
+
+                if (c.eps_to_first_signal && s.eps_to_first_signal > 0) {
+                    const gap = (c.eps_to_first_signal / s.eps_to_first_signal).toFixed(0);
+                    document.getElementById('advantageX').innerText = gap + 'x';
+                } else if (c.eps_to_first_signal === null) {
+                    document.getElementById('advantageX').innerText = '∞';
+                }
+
+                // Render Chart
+                const historyLen = c.success_history.length;
+                const labels = Array.from({ length: historyLen }, (_, i) => i * 10);
+
+                new Chart(document.getElementById('simChart'), {
+                    type: 'line',
+                    data: {
+                        labels: labels,
+                        datasets: [
+                            {
+                                label: 'Classic TD(λ)',
+                                data: c.success_history,
+                                borderColor: '#f85149',
+                                pointRadius: 0,
+                                tension: 0.2
+                            },
+                            {
+                                label: 'Scaffolded TD(0)',
+                                data: s.success_history,
+                                borderColor: '#3fb950',
+                                pointRadius: 0,
+                                tension: 0.2
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: { legend: { position: 'bottom' } },
+                        scales: {
+                            y: { min: 0, max: 1.1, grid: { color: '#30363d' }, title: { display: true, text: 'Success Prob (V-Val)' } },
+                            x: { grid: { display: false }, title: { display: true, text: 'Episodes' } }
+                        }
+                    }
+                });
+
+            } catch (e) {
+                console.error(e);
+                alert("Please run td_simulation.py first to generate results.");
+            }
+        }
+
+        renderTheory();
+        loadSimData();
+    </script>
+</body>
+
+</html>
