@@ -193,5 +193,63 @@ In motor learning theory (Fitts & Posner, 1967), skill acquisition progresses th
 | **Frustration (Early Trials)** | High (no completion) | Low (always completes) |
 | **Motivation** | Low (no visible progress) | High (instant success) |
 
-## 7. Summary
-Scaffolding transforms a problem from **Polynomial/Exponential Complexity** ($O(S^k)$) to **Linear Complexity** ($O(k \cdot S)$) by breaking the joint probability distribution into a sum of marginal probabilities. This mathematical principle is mirrored in the neuroscience of reward learning and the developmental psychology of children, explaining why backward chaining is a biologically optimal teaching strategy.
+## 7. Connection to Richard Sutton's OaK Framework
+
+Richard Sutton's **OaK (Options and Knowledge)** framework proposes a path toward continually learning, general-purpose AI agents. Backward Chaining aligns remarkably well with several core principles of OaK.
+
+### 7.1 Options as Temporally Extended Actions
+In OaK, an **Option** is a temporally extended action—a "skill" or "sub-routine" that encapsulates a sequence of primitive actions toward a sub-goal. 
+
+**Backward Chaining as Option Discovery**:
+*   Each **Phase** of our curriculum corresponds to learning a new **Option**.
+*   **Phase 1** (learn $s_{k-1} \rightarrow s_k$): The agent learns Option $\omega_k$ (the final skill).
+*   **Phase 2** (learn $s_{k-2} \rightarrow s_{k-1}$): The agent learns Option $\omega_{k-1}$, which *terminates* at the initiation set of $\omega_k$.
+*   This creates a **Chain of Options**: $\omega_1 \rightarrow \omega_2 \rightarrow \dots \rightarrow \omega_k$.
+
+By teaching the last option first, backward chaining ensures that when an earlier option is learned, its **termination reward** is already well-defined (the value of the next option).
+
+### 7.2 Knowledge through Prediction (GVFs)
+OaK emphasizes **General Value Functions (GVFs)** as a form of predictive knowledge. A GVF answers questions like: "What is the expected future value if I take action $a$ in state $s$?"
+
+**Backward Chaining and GVF Propagation**:
+*   In Phase 1, the agent learns $V(s_{k-1}) \approx 1$ (direct reward).
+*   In Phase 2, the agent learns $V(s_{k-2}) = \gamma \cdot V(s_{k-1})$ (bootstrapped from Phase 1 knowledge).
+*   Each phase **grounds** a new GVF in terms of already-established predictions.
+*   This is precisely the **FC-STOMP** progression: Feature Construction → SubTask → Option → Model → Planning.
+
+Backward Chaining provides a **structured curriculum** for building up GVFs in a way that avoids the "cold start" problem where all predictions are meaningless.
+
+### 7.3 Overcoming Catastrophic Forgetting
+A key challenge OaK addresses is **catastrophic forgetting**—where learning new skills destroys old ones.
+
+**Why Backward Chaining Helps**:
+*   Each new Phase *depends* on the previous one. The agent cannot "forget" $V(s_{k-1})$ while learning $V(s_{k-2})$ because the latter explicitly uses the former.
+*   The curriculum creates a **dependency graph** that prevents overwriting:
+    ```
+    V(s_0) → V(s_1) → ... → V(s_{k-1}) → Reward
+    ```
+*   This mirrors how biological memory consolidation works: new skills are learned in the context of existing skills, creating a robust, interconnected knowledge structure.
+
+### 7.4 Model-Based Planning with Options
+OaK advocates for **model-based RL** where the agent learns a predictive model of each option's effect. This enables "planning with larger jumps" in state space.
+
+**Backward Chaining as Model Grounding**:
+*   After learning Option $\omega_k$, the agent can model: "If I execute $\omega_k$ from $s_{k-1}$, I reach the goal."
+*   After learning Option $\omega_{k-1}$, the model extends: "If I execute $\omega_{k-1}$ from $s_{k-2}$, I reach the initiation set of $\omega_k$."
+*   The agent builds a **hierarchical world model** where options are the primitive units of planning.
+
+This is vastly more sample-efficient than learning a flat, primitive-action model from scratch.
+
+### 7.5 Summary: OaK + Backward Chaining = Grounded Hierarchical Learning
+
+| OaK Principle | How Backward Chaining Implements It |
+|--------------|-------------------------------------|
+| **Options (Temporal Abstraction)** | Each curriculum phase learns one option; chaining creates hierarchical policies. |
+| **GVFs (Predictive Knowledge)** | Each phase grounds a new GVF in terms of previously learned values. |
+| **Continual Learning** | Dependency structure prevents catastrophic forgetting. |
+| **Model-Based Planning** | Options become primitives for an abstract, hierarchical world model. |
+
+Backward Chaining is not just a "teaching trick"—it is a principled mechanism for **grounding hierarchical knowledge** in a way that aligns with the OaK vision for superintelligent, continually learning agents.
+
+## 8. Summary
+Scaffolding transforms a problem from **Polynomial/Exponential Complexity** ($O(S^k)$) to **Linear Complexity** ($O(k \cdot S)$) by breaking the joint probability distribution into a sum of marginal probabilities. This mathematical principle is mirrored in the neuroscience of reward learning, the developmental psychology of children, and the theoretical foundations of Hierarchical RL (Options, OaK). Backward Chaining is a biologically and computationally optimal teaching strategy for any agent—biological or artificial—that must learn complex sequential tasks.
